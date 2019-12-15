@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+{% load static %}
+<html class="has-navbar-fixed-top">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hello newbee!</title>
+    <link rel="stylesheet" href="{% static 'css/bulma.min.css' %}">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+<body>
+<section class="hero is-fullheight-with-navbar is-bold">
+    <div class="hero-head">
+
+        <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
+            <div class="navbar-brand">
+                <a class="navbar-item" href="https://bulma.io">
+                    <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+                </a>
+                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
+                   data-target="navbarBasicExample">
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                    <span aria-hidden="true"></span>
+                </a>
+            </div>
+            <div id="navbarBasicExample" class="navbar-menu">
+                <div class="navbar-start">
+                    <a class="navbar-item">
+                        Home
+                    </a>
+                    <a class="navbar-item">
+                        Documentation
+                    </a>
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            More
+                        </a>
+                        <div class="navbar-dropdown">
+                            <a class="navbar-item">
+                                About
+                            </a>
+                            <a class="navbar-item">
+                                Jobs
+                            </a>
+                            <a class="navbar-item">
+                                Contact
+                            </a>
+                            <hr class="navbar-divider">
+                            <a class="navbar-item">
+                                Report an issue
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="navbar-end">
+                    <div class="navbar-item">
+                        <div class="buttons">
+                            <a class="button is-primary">
+                                <strong>Sign up</strong>
+                            </a>
+                            <a class="button is-light">
+                                Log in
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="hero-body" style="display: block">
+        <div class="container" style="max-width: 100%">
+            <div class="container" style="max-width: 100%">
+                <div class="tile is-ancestor">
+                    <div class="tile is-vertical is-8">
+                        <div class="tile">
+                            <div class="tile is-parent is-vertical">
+                                <article class="tile is-child notification is-primary">
+                                    <p class="title">Representation</p>
+                                    <div class="content notification is-dark">
+                                        <div class="content notification is-info">
+                                            <div class="columns">
+                                            {% for header in data.columns %}
+                                            <div class="column has-text-centered">
+                                                <p class="subtitle">{{ header }}</p>
+                                            </div>
+                                            {% empty %}
+                                                <p class="subtitle">Sorry, no data loaded yet</p>
+                                            {% endfor %}
+                                            </div>
+                                        </div>
+                                        <div class="content notification is-dark">
+                                            {% for row in data.values %}
+                                            <div class="columns">
+                                                {% for cell in row %}
+                                                    <div class="column has-text-centered">
+                                                        <p class="subtitle">{{ cell }}</p>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="tile is-vertical is-4">
+                        <div class="tile is-parent is-vertical">
+                            <article class="tile is-child notification is-dark">
+                                <p class="title">Data</p>
+                                <div class="content">
+                                    <form id="data_selector" enctype="multipart/form-data" action="{% url 'calculate' %}" method="post">
+                                    {% csrf_token %}
+                                        <div>
+                                            {{ headers.json }}
+                                        </div>
+                                        {% for header in data.columns %}
+                                        <div class="columns">
+                                            <div class="column">
+                                                <p class="subtitle">{{ header }}</p>
+                                            </div>
+                                            <div class="column">
+                                                <button name="{{ header }}" type="button" class="button is-primary" onclick="applyData(this)">Add</button>
+                                                <button name="{{ header }}" type="button" class="button is-info" onclick="markID(this)">SetID</button>
+                                            </div>
+                                            <div class="column">
+                                                <div class="select">
+                                                    <select>
+                                                        <option>Num vector</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        {% empty %}
+                                            <p class="subtitle">Sorry, no data loaded yet</p>
+                                        {% endfor %}
+                                        {% if data is not None %}
+                                            <div class="field is-grouped is-grouped-right">
+                                                <button class="button is-primary" type="submit">Submit</button>
+                                            </div>
+                                        {% endif %}
+                                    </form>
+                                </div>
+                            </article>
+                            <article class="tile is-child notification is-dark">
+                                <div class="content">
+                                    <p class="title">Load data</p>
+                                    <p class="subtitle">CSV format currently</p>
+                                    <div class="content">
+                                        <form id="file_input" enctype="multipart/form-data" action="{% url 'upload' %}" method="post">
+                                            {% csrf_token %}
+                                            {{ form.file.errors }}
+                                            <div class="field">
+                                                <div class="file is-info has-name">
+                                                    <label class="file-label">
+                                                        {{ form.file }}
+                                                        <span class="file-cta">
+                                                            <span class="file-icon">
+                                                                <i class="fas fa-upload"></i>
+                                                            </span>
+                                                            <span class="file-label">
+                                                                Upload
+                                                            </span>
+                                                        </span>
+                                                        <span class="file-name">
+                                                            Choose file for uploading
+                                                        </span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <script>
+                                                const fileInput = document.querySelector('#file_input input[type=file]');
+                                                fileInput.onchange = () => {
+                                                    if (fileInput.files.length > 0) {
+                                                        const fileName = document.querySelector('#file_input .file-name');
+                                                        fileName.textContent = fileInput.files[0].name;
+                                                    }
+                                                }
+                                            </script>
+                                            <div class="field is-grouped is-grouped-right">
+                                                <button class="button is-success" type="submit">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </article>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-foot">
+        <footer class="footer">
+            <div class="content has-text-centered">
+                <p>
+                    Diploma demo of <strong>DATA</strong> by Roman Bagautdinov.
+                </p>
+            </div>
+        </footer>
+    </div>
+</section>
+<script>
+    var calculating_keys = {};
+    var selector = document.getElementById('headerSelector');
+
+    function applyData(event) {
+        var key = event.name;
+        if (calculating_keys[key] === true) {
+            event.className = 'button is-primary';
+            event.textContent = 'Add';
+            calculating_keys[key] = false
+        } else {
+            event.className = 'button is-danger';
+            event.textContent = 'Remove';
+            calculating_keys[key] = true
+        }
+        selector.value =  JSON.stringify(calculating_keys);
+    }
+
+    function markID(event) {
+        var key = event.name;
+        calculating_keys['id'] = key;
+        alert(key + " setted as ID")
+    }
+</script>
+</body>
+</html>
