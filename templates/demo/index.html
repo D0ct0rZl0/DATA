@@ -78,28 +78,28 @@
                                 <article class="tile is-child notification is-primary">
                                     <p class="title">Representation</p>
                                     <div class="content notification is-dark">
-                                        <div class="content notification is-info">
-                                            <div class="columns">
-                                            {% for header in data.columns %}
-                                            <div class="column has-text-centered">
-                                                <p class="subtitle">{{ header }}</p>
+                                            <div class="content notification is-info">
+                                                <div class="columns">
+                                                {% for header in data.columns %}
+                                                <div class="column has-text-centered">
+                                                    <p class="subtitle">{{ header }}</p>
+                                                </div>
+                                                {% empty %}
+                                                    <p class="subtitle">Sorry, no data loaded yet</p>
+                                                {% endfor %}
+                                                </div>
                                             </div>
-                                            {% empty %}
-                                                <p class="subtitle">Sorry, no data loaded yet</p>
-                                            {% endfor %}
-                                            </div>
-                                        </div>
-                                        <div class="content notification is-dark">
-                                            {% for row in data.values %}
-                                            <div class="columns">
-                                                {% for cell in row %}
-                                                    <div class="column has-text-centered">
-                                                        <p class="subtitle">{{ cell }}</p>
-                                                    </div>
+                                            <div class="content notification is-dark">
+                                                {% for row in data.values %}
+                                                <div class="columns">
+                                                    {% for cell in row %}
+                                                        <div class="column has-text-centered">
+                                                            <p class="subtitle">{{ cell }}</p>
+                                                        </div>
+                                                    {% endfor %}
+                                                </div>
                                                 {% endfor %}
                                             </div>
-                                            {% endfor %}
-                                        </div>
                                     </div>
                                 </article>
                             </div>

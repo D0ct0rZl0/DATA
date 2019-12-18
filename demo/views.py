@@ -33,5 +33,5 @@ def upload_file(request):
 def calculate(request):
     headers = request.POST['json']
     data = request.session['data']
-    classify_data_by_headers(headers, data)
-    return HttpResponse(data)
+    fig = classify_data_by_headers(headers, data)
+    return render(request, 'plot.html', {'figure': [fig]})

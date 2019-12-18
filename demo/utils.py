@@ -1,19 +1,20 @@
 import json
 from scipy.cluster.hierarchy import linkage, dendrogram
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt, mpld3
 import pandas as pd
 
 
 def classify_data_by_headers(headers, data):
+    plt.figure(figsize=(15, 6))
     headers_json = json.loads(headers)
     data_json = json.loads(data)
 
     output_json = {}
-    id = headers_json['id']
+    hid = headers_json.get('id')
 
     for elem in data_json:
         for key, value in elem.items():
-            if headers_json.get(key) or key == id:
+            if headers_json.get(key) or key == hid:
                 if output_json.get(key) is None:
                     output_json.update({key: [value]})
                 else:
@@ -21,16 +22,13 @@ def classify_data_by_headers(headers, data):
 
     output_df = pd.read_json(json.dumps(output_json))
 
-    varieties = list(output_df.pop(id))
-    samples = output_df.values
+    if hid is not None:
+        varieties = list(output_df.pop(hid))
 
-    print(samples)
-    print(varieties)
-
-    mergings = linkage(samples, method='complete')
-    if id is not None:
+    mergings = linkage(output_df.to_numpy(), method='complete')
+    if hid is not None:
         dendrogram(mergings, labels=varieties)
     else:
         dendrogram(mergings)
 
-    plt.show()
+    return mpld3.fig_to_html(plt.gcf())
