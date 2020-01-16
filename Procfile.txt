@@ -1,2 +1,2 @@
-web: gunicorn DATA.wsgi
+web: gunicorn demo:app
 heroku ps:scale web=1
