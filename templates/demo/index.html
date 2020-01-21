@@ -11,56 +11,26 @@
 <body>
 <section class="hero is-fullheight-with-navbar is-bold">
     <div class="hero-head">
-
         <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="https://bulma.io">
-                    <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-                </a>
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                   data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
+                <a class="navbar-item" href="https://kpfu.ru/">
+                    <img src="{% static 'img/KFU.png' %}" width="60" height="60" style="max-height: fit-content">
                 </a>
             </div>
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
                     <a class="navbar-item">
-                        Home
+                        Документация
                     </a>
-                    <a class="navbar-item">
-                        Documentation
-                    </a>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            More
-                        </a>
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                About
-                            </a>
-                            <a class="navbar-item">
-                                Jobs
-                            </a>
-                            <a class="navbar-item">
-                                Contact
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                Report an issue
-                            </a>
-                        </div>
-                    </div>
                 </div>
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary">
-                                <strong>Sign up</strong>
+                            <a class="button is-primary" disabled="true">
+                                <strong>Регистрация</strong>
                             </a>
-                            <a class="button is-light">
-                                Log in
+                            <a class="button is-light" disabled="true">
+                                Логин
                             </a>
                         </div>
                     </div>
@@ -76,7 +46,7 @@
                         <div class="tile">
                             <div class="tile is-parent is-vertical">
                                 <article class="tile is-child notification is-primary">
-                                    <p class="title">Representation</p>
+                                    <p class="title">Таблица данных</p>
                                     <div class="content notification is-dark">
                                             <div class="content notification is-info">
                                                 <div class="columns">
@@ -85,7 +55,7 @@
                                                     <p class="subtitle">{{ header }}</p>
                                                 </div>
                                                 {% empty %}
-                                                    <p class="subtitle">Sorry, no data loaded yet</p>
+                                                    <p class="subtitle">Данные не были загружены</p>
                                                 {% endfor %}
                                                 </div>
                                             </div>
@@ -108,7 +78,7 @@
                     <div class="tile is-vertical is-4">
                         <div class="tile is-parent is-vertical">
                             <article class="tile is-child notification is-dark">
-                                <p class="title">Data</p>
+                                <p class="title">Управление данными</p>
                                 <div class="content">
                                     <form id="data_selector" enctype="multipart/form-data" action="{% url 'calculate' %}" method="post">
                                     {% csrf_token %}
@@ -121,23 +91,23 @@
                                                 <p class="subtitle">{{ header }}</p>
                                             </div>
                                             <div class="column">
-                                                <button name="{{ header }}" type="button" class="button is-primary" onclick="applyData(this)">Add</button>
-                                                <button name="{{ header }}" type="button" class="button is-info" onclick="markID(this)">SetID</button>
+                                                <button name="{{ header }}" type="button" class="button is-primary" onclick="applyData(this)">Добавить</button>
+                                                <button name="{{ header }}" type="button" class="button is-info" onclick="markID(this)">Метка</button>
                                             </div>
                                             <div class="column">
                                                 <div class="select">
                                                     <select>
-                                                        <option>Num vector</option>
+                                                        <option>Число</option>
                                                     </select>
                                                 </div>
                                             </div>
                                         </div>
                                         {% empty %}
-                                            <p class="subtitle">Sorry, no data loaded yet</p>
+                                            <p class="subtitle">Данные не были загружены</p>
                                         {% endfor %}
                                         {% if data is not None %}
                                             <div class="field is-grouped is-grouped-right">
-                                                <button class="button is-primary" type="submit">Submit</button>
+                                                <button class="button is-primary" type="submit">Отправить</button>
                                             </div>
                                         {% endif %}
                                     </form>
@@ -145,8 +115,8 @@
                             </article>
                             <article class="tile is-child notification is-dark">
                                 <div class="content">
-                                    <p class="title">Load data</p>
-                                    <p class="subtitle">CSV format currently</p>
+                                    <p class="title">Загрузить данные</p>
+                                    <p class="subtitle">Демо версия поддерживает табличный .csv формат</p>
                                     <div class="content">
                                         <form id="file_input" enctype="multipart/form-data" action="{% url 'upload' %}" method="post">
                                             {% csrf_token %}
@@ -160,11 +130,11 @@
                                                                 <i class="fas fa-upload"></i>
                                                             </span>
                                                             <span class="file-label">
-                                                                Upload
+                                                                Загрузить
                                                             </span>
                                                         </span>
                                                         <span class="file-name">
-                                                            Choose file for uploading
+                                                            Выберите файл для загрузки
                                                         </span>
                                                     </label>
                                                 </div>
@@ -179,7 +149,7 @@
                                                 }
                                             </script>
                                             <div class="field is-grouped is-grouped-right">
-                                                <button class="button is-success" type="submit">Submit</button>
+                                                <button class="button is-success" type="submit">Отправить</button>
                                             </div>
                                         </form>
                                     </div>
@@ -195,7 +165,7 @@
         <footer class="footer">
             <div class="content has-text-centered">
                 <p>
-                    Diploma demo of <strong>DATA</strong> by Roman Bagautdinov.
+                    Демонстранционная версия дипломной работы, проект <strong>DATA</strong>. Роман Багаутдинов, <strong>КФУ - ВШ ИТИС</strong>.
                 </p>
             </div>
         </footer>
@@ -209,11 +179,11 @@
         var key = event.name;
         if (calculating_keys[key] === true) {
             event.className = 'button is-primary';
-            event.textContent = 'Add';
+            event.textContent = 'Добавить';
             calculating_keys[key] = false
         } else {
             event.className = 'button is-danger';
-            event.textContent = 'Remove';
+            event.textContent = 'Удалить';
             calculating_keys[key] = true
         }
         selector.value =  JSON.stringify(calculating_keys);
@@ -222,7 +192,7 @@
     function markID(event) {
         var key = event.name;
         calculating_keys['id'] = key;
-        alert(key + " setted as ID")
+        alert(key + " выбран в качестве Метки")
     }
 </script>
 </body>

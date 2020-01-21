@@ -11,56 +11,26 @@
 <body>
 <section class="hero is-fullheight-with-navbar is-bold">
     <div class="hero-head">
-
         <nav class="navbar is-fixed-top" role="navigation" aria-label="main navigation">
             <div class="navbar-brand">
-                <a class="navbar-item" href="https://bulma.io">
-                    <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
-                </a>
-                <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false"
-                   data-target="navbarBasicExample">
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
-                    <span aria-hidden="true"></span>
+                <a class="navbar-item" href="https://kpfu.ru/">
+                    <img src="{% static 'img/KFU.png' %}" width="60" height="60" style="max-height: fit-content">
                 </a>
             </div>
             <div id="navbarBasicExample" class="navbar-menu">
                 <div class="navbar-start">
                     <a class="navbar-item">
-                        Home
+                        Документация
                     </a>
-                    <a class="navbar-item">
-                        Documentation
-                    </a>
-                    <div class="navbar-item has-dropdown is-hoverable">
-                        <a class="navbar-link">
-                            More
-                        </a>
-                        <div class="navbar-dropdown">
-                            <a class="navbar-item">
-                                About
-                            </a>
-                            <a class="navbar-item">
-                                Jobs
-                            </a>
-                            <a class="navbar-item">
-                                Contact
-                            </a>
-                            <hr class="navbar-divider">
-                            <a class="navbar-item">
-                                Report an issue
-                            </a>
-                        </div>
-                    </div>
                 </div>
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="buttons">
-                            <a class="button is-primary">
-                                <strong>Sign up</strong>
+                            <a class="button is-primary" disabled="true">
+                                <strong>Регистрация</strong>
                             </a>
-                            <a class="button is-light">
-                                Log in
+                            <a class="button is-light" disabled="true">
+                                Логин
                             </a>
                         </div>
                     </div>
@@ -76,8 +46,8 @@
                         <div class="tile">
                             <div class="tile is-parent is-vertical">
                                 <article class="tile is-child notification is-primary">
-                                    <p class="title">Graph</p>
-                                    <p class="subclass">Dendrogram</p>
+                                    <p class="title">Граф</p>
+                                    <p class="subclass">Иерархическая кластеризация - Дендрограмма</p>
                                     <div class="content notification is-dark">
                                         <div class="content notification">
                                         {% for elem in figure %}
@@ -86,7 +56,7 @@
                                         </div>
                                         <form id="return" enctype="multipart/form-data" action="{% url 'index' %}" method="get">
                                             <div class="field is-grouped is-grouped-right">
-                                                <button class="button is-danger" type="submit">Return</button>
+                                                <button class="button is-danger" type="submit">Закрыть</button>
                                             </div>
                                         </form>
                                     </div>
@@ -102,7 +72,7 @@
         <footer class="footer">
             <div class="content has-text-centered">
                 <p>
-                    Diploma demo of <strong>DATA</strong> by Roman Bagautdinov.
+                    Демонстранционная версия дипломной работы, проект <strong>DATA</strong>. Роман Багаутдинов, <strong>КФУ - ВШ ИТИС</strong>.
                 </p>
             </div>
         </footer>
